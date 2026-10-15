@@ -1,0 +1,53 @@
+{
+  "name": "tablette",
+  "productName": "Tablette",
+  "version": "0.1.0",
+  "description": "Client de base de données épuré — PostgreSQL, MySQL, SQLite, ⌘K.",
+  "main": "src/main/main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --mac dmg --publish never"
+  },
+  "dependencies": {
+    "mysql2": "3.11.5",
+    "pg": "8.13.1",
+    "sql.js": "1.12.0"
+  },
+  "devDependencies": {
+    "electron": "33.2.1",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "fr.projet-iota.tablette",
+    "productName": "Tablette",
+    "files": [
+      "src/**",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "identity": null
+    },
+    "dmg": {
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    }
+  },
+  "author": "Hugo Kovac",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HugoKovac/SimpleClient.git"
+  }
+}

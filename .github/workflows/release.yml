@@ -1,0 +1,36 @@
+name: Release
+
+# Push a tag like v0.2.0 → builds Tablette-0.2.0-arm64.dmg and Tablette-0.2.0-x64.dmg
+# and attaches them to a GitHub Release for that tag.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  dmg:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Version from tag
+        run: npm version "${GITHUB_REF_NAME#v}" --no-git-tag-version --allow-same-version
+
+      - name: Build DMGs (arm64 + x64)
+        run: npx electron-builder --mac dmg --publish never
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false' # unsigned build (no Apple Developer certificate)
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.dmg
+          generate_release_notes: true

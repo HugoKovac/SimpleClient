@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'">
+  <title>Tablette</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar">
+      <div class="side-head drag">
+        <span class="brand">Tablette</span>
+        <button class="icon-btn no-drag" id="btn-new-conn" title="Nouvelle connexion (⌘N)">
+          <svg viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></svg>
+        </button>
+      </div>
+      <button class="search-trigger" id="btn-palette">
+        <svg viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg>
+        <span>Aller à…</span><kbd class="mod">K</kbd>
+      </button>
+      <div id="tree" class="tree"></div>
+    </aside>
+    <main id="main">
+      <div id="tabbar" class="tabbar drag"></div>
+      <div id="view"></div>
+    </main>
+  </div>
+
+  <div id="palette" class="overlay hidden">
+    <div class="palette">
+      <input id="palette-input" placeholder="Tables, bases, connexions, actions…" autocomplete="off" spellcheck="false">
+      <div id="palette-list" class="palette-list"></div>
+      <div class="palette-foot"><span><kbd>↑</kbd><kbd>↓</kbd> naviguer</span><span><kbd>↵</kbd> ouvrir</span><span><kbd>esc</kbd> fermer</span></div>
+    </div>
+  </div>
+
+  <div id="modal" class="overlay hidden"></div>
+  <div id="toast" class="toast hidden"></div>
+  <script src="app.js"></script>
+</body>
+</html>

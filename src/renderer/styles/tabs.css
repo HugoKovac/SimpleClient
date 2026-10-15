@@ -1,0 +1,28 @@
+/* ------------------------------------------------ tabs */
+#main { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+.tabbar { height: 44px; display: flex; align-items: flex-end; gap: 2px; padding: 0 8px; border-bottom: 1px solid var(--line); overflow-x: auto; overflow-y: hidden; flex: none; }
+.tabbar::-webkit-scrollbar { display: none; }
+.tab { height: 32px; display: flex; align-items: center; gap: 7px; padding: 0 8px 0 12px; border-radius: 7px 7px 0 0; color: var(--ink-3); max-width: 220px; min-width: 0; flex: none; position: relative; }
+.tab:hover { color: var(--ink-2); background: var(--bg-hover); }
+.tab.active { color: var(--ink); background: var(--bg-elev); box-shadow: 0 0 0 1px var(--line); clip-path: inset(-1px -1px 0 -1px); }
+.tab.active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--bg-elev); }
+.tab .bar { position: absolute; top: 0; left: 10px; right: 10px; height: 2px; border-radius: 0 0 2px 2px; }
+.tab .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tab .sub { color: var(--ink-3); font-size: 11px; white-space: nowrap; }
+.tab .x { width: 18px; height: 18px; border-radius: 4px; display: grid; place-items: center; opacity: 0; }
+.tab:hover .x, .tab.active .x { opacity: 1; }
+.tab .x:hover { background: var(--bg-active); }
+.tab .x svg { width: 10px; height: 10px; }
+.tab-add { height: 32px; width: 28px; display: grid; place-items: center; color: var(--ink-3); border-radius: 6px; flex: none; }
+.tab-add:hover { background: var(--bg-hover); color: var(--ink); }
+
+#view { flex: 1; min-height: 0; display: flex; flex-direction: column; background: var(--bg-elev); }
+
+/* ------------------------------------------------ tabs must stay clickable inside the drag region */
+.tab, .tab-add, .tab .x { -webkit-app-region: no-drag; }
+
+/* ------------------------------------------------ empty state */
+.empty { flex: 1; display: grid; place-items: center; color: var(--ink-3); }
+.empty .inner { text-align: center; line-height: 2; }
+.empty .row { display: flex; gap: 10px; align-items: center; justify-content: space-between; min-width: 240px; }
+.empty .row span:first-child { color: var(--ink-2); }

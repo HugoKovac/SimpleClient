@@ -1,0 +1,65 @@
+:root {
+  --bg: #fbfbfa;
+  --bg-side: #f4f4f2;
+  --bg-elev: #ffffff;
+  --bg-hover: rgba(0, 0, 0, 0.045);
+  --bg-active: rgba(0, 0, 0, 0.075);
+  --line: rgba(0, 0, 0, 0.08);
+  --line-strong: rgba(0, 0, 0, 0.14);
+  --ink: #1d1d1b;
+  --ink-2: #5d5d58;
+  --ink-3: #8f8f88;
+  --accent: #0f766e;
+  --accent-soft: rgba(15, 118, 110, 0.10);
+  --sel: rgba(15, 118, 110, 0.14);
+  --danger: #c2410c;
+  --null: #a3a39c;
+  --num: #1f5fbf;
+  --shadow: 0 16px 48px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.06);
+  --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --radius: 7px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161616;
+    --bg-side: #1c1c1b;
+    --bg-elev: #222221;
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-active: rgba(255, 255, 255, 0.09);
+    --line: rgba(255, 255, 255, 0.07);
+    --line-strong: rgba(255, 255, 255, 0.13);
+    --ink: #ececea;
+    --ink-2: #a8a8a2;
+    --ink-3: #75756f;
+    --accent: #2dd4bf;
+    --accent-soft: rgba(45, 212, 191, 0.10);
+    --sel: rgba(45, 212, 191, 0.16);
+    --danger: #fb923c;
+    --null: #5f5f5a;
+    --num: #7fb2ff;
+    --shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font: 13px/1.4 var(--font); -webkit-font-smoothing: antialiased; overflow: hidden; user-select: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: default; }
+input, textarea, select { font: inherit; color: inherit; }
+svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+kbd { font: 11px var(--font); color: var(--ink-3); border: 1px solid var(--line-strong); border-radius: 4px; padding: 0 4px; min-width: 18px; text-align: center; display: inline-block; line-height: 16px; }
+.drag { -webkit-app-region: drag; }
+.no-drag, .drag button, .drag input { -webkit-app-region: no-drag; }
+.hidden { display: none !important; }
+
+/* minmax(0, 1fr): the row must not grow with the content (a long table list in the
+   sidebar used to stretch the whole window and block vertical scrolling) */
+#app { display: grid; grid-template-columns: 248px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); height: 100vh; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 10px; border: 2px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-corner { background: transparent; }
+button:focus { outline: none; }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }

@@ -1,3 +1,5 @@
+// Sandboxed preload: exposes a promise API over IPC as `window.api`.
+// Handlers answer { ok, data, ms } | { ok: false, error, ms } (see ipc.js).
 const { contextBridge, ipcRenderer } = require('electron');
 
 const call = (ch) => async (...args) => {
@@ -21,4 +23,14 @@ contextBridge.exposeInMainWorld('api', {
   browse: call('db:browse'),
   query: call('db:query'),
   pickSqlite: data('dialog:sqlite'),
+  checkUpdate: data('update:check'),
+  downloadUpdate: data('update:download'),
+  installUpdate: data('update:install'),
+  openReleasePage: data('update:page'),
+  /** @returns {() => void} unsubscribe */
+  onUpdateProgress: (fn) => {
+    const listener = (_e, p) => fn(p);
+    ipcRenderer.on('update:progress', listener);
+    return () => ipcRenderer.removeListener('update:progress', listener);
+  },
 });

@@ -1,0 +1,18 @@
+/* ------------------------------------------------ palette */
+.overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.18); display: flex; justify-content: center; align-items: flex-start; padding-top: 14vh; z-index: 50; }
+@media (prefers-color-scheme: dark) { .overlay { background: rgba(0, 0, 0, 0.45); } }
+.palette { width: min(620px, 92vw); background: var(--bg-elev); border-radius: 12px; box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; }
+.palette input { border: 0; outline: 0; background: transparent; font-size: 16px; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+.palette-list { max-height: 52vh; overflow: auto; padding: 6px; }
+.p-group { font-size: 11px; color: var(--ink-3); padding: 8px 10px 4px; letter-spacing: .02em; }
+.p-item { display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 10px; border-radius: 7px; color: var(--ink-2); }
+.p-item svg { color: var(--ink-3); }
+.p-item .t { color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.p-item .t b { color: var(--accent); font-weight: 600; }
+.p-item .s { color: var(--ink-3); font-size: 12px; margin-left: auto; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+.p-item .s .dot { width: 7px; height: 7px; border-radius: 50%; }
+.p-item.on { background: var(--accent-soft); }
+.p-item.on svg { color: var(--accent); }
+.p-empty { padding: 20px; color: var(--ink-3); text-align: center; }
+.palette-foot { display: flex; gap: 16px; padding: 8px 14px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 11.5px; }
+.palette-foot kbd { margin-right: 3px; }

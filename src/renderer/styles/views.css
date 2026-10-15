@@ -1,0 +1,31 @@
+/* ------------------------------------------------ toolbar */
+.toolbar { height: 40px; display: flex; align-items: center; gap: 8px; padding: 0 10px; border-bottom: 1px solid var(--line); flex: none; }
+.seg { display: flex; background: var(--bg-hover); border-radius: 6px; padding: 2px; }
+.seg button { height: 22px; padding: 0 10px; border-radius: 4px; color: var(--ink-2); font-size: 12px; }
+.seg button.on { background: var(--bg-elev); color: var(--ink); box-shadow: 0 0 0 1px var(--line), 0 1px 2px rgba(0,0,0,.06); }
+.filter { flex: 1; display: flex; align-items: center; gap: 6px; height: 26px; padding: 0 8px; border-radius: 6px; background: var(--bg-hover); color: var(--ink-3); min-width: 120px; }
+.filter:focus-within { box-shadow: 0 0 0 1.5px var(--accent); background: transparent; }
+.filter span { font: 12px var(--mono); }
+.filter input { flex: 1; border: 0; outline: 0; background: transparent; font: 12px var(--mono); color: var(--ink); min-width: 0; }
+.pager { display: flex; align-items: center; gap: 2px; color: var(--ink-3); font-size: 12px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.pager .icon-btn:disabled { opacity: .35; }
+.btn { height: 26px; padding: 0 10px; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); }
+.btn:hover { background: var(--bg-hover); color: var(--ink); }
+.btn.primary { background: var(--accent); color: #fff; }
+@media (prefers-color-scheme: dark) { .btn.primary { color: #062b28; } }
+.btn.primary:hover { filter: brightness(1.08); background: var(--accent); }
+.btn.danger { color: var(--danger); }
+.btn kbd { border-color: currentColor; color: inherit; opacity: .7; }
+.toolbar .sp { flex: 1; }
+.conn-name { color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.conn-dot { width: 8px; height: 8px; border-radius: 50%; }
+.db-select { height: 26px; border: 1px solid var(--line-strong); border-radius: 6px; background: var(--bg); padding: 0 6px; max-width: 220px; }
+
+/* ------------------------------------------------ tab view */
+.view { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.body { flex: 1; display: flex; min-height: 0; }
+.body > .grid-wrap { flex: 1; min-width: 0; }
+
+/* ------------------------------------------------ structure */
+.struct { padding: 0; }
+.struct td.pk { color: var(--accent); }

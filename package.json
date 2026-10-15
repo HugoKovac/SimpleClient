@@ -1,6 +1,6 @@
 {
-  "name": "tablette",
-  "productName": "Tablette",
+  "name": "simpleclient",
+  "productName": "SimpleClient",
   "version": "0.1.0",
   "description": "Client de base de données épuré — PostgreSQL, MySQL, SQLite, ⌘K.",
   "main": "src/main/main.js",
@@ -19,8 +19,8 @@
     "electron-builder": "^25.1.8"
   },
   "build": {
-    "appId": "fr.projet-iota.tablette",
-    "productName": "Tablette",
+    "appId": "fr.projet-iota.simpleclient",
+    "productName": "SimpleClient",
     "files": [
       "src/**",
       "package.json"

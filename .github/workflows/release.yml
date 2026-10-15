@@ -1,6 +1,6 @@
 name: Release
 
-# Push a tag like v0.2.0 → builds Tablette-0.2.0-arm64.dmg and Tablette-0.2.0-x64.dmg
+# Push a tag like v0.2.0 → builds SimpleClient-0.2.0-arm64.dmg and SimpleClient-0.2.0-x64.dmg
 # and attaches them to a GitHub Release for that tag.
 on:
   push:

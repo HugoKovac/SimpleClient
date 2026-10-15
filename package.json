@@ -28,6 +28,7 @@
     "directories": {
       "output": "dist"
     },
+    "afterPack": "build/adhoc-sign.js",
     "mac": {
       "category": "public.app-category.developer-tools",
       "target": [

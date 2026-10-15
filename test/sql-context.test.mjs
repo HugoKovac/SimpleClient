@@ -68,3 +68,12 @@ test('inside a quoted identifier', () => {
   assert.equal(c.quoted, true);
   assert.equal(c.prefix, 'Crea');
 });
+
+test('prefix: a WHERE-only field is completed against its table', () => {
+  const prefix = 'select * from "users" where ';
+  const c = completionContext('id = 1 and na', 13, { prefix });
+  assert.equal(c.mode, 'column');
+  assert.deepEqual([c.start, c.end, c.prefix], [11, 13, 'na']);
+  assert.deepEqual(c.refs, [{ table: 'users', alias: null }]);
+  assert.equal(completionContext("name = 'a|", 9, { prefix }), null);
+});

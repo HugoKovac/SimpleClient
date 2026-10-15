@@ -1,4 +1,4 @@
-// Pixel position of a character in a <textarea>, via a hidden mirror element.
+// Pixel position of a character in a <textarea> or <input>, via a hidden mirror element.
 
 const COPIED = [
   'boxSizing', 'width', 'borderTopWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth',
@@ -20,11 +20,14 @@ export function caretCoords(ta, pos) {
   const st = mirror.style;
   for (const p of COPIED) st[p] = cs[p];
   st.position = 'absolute'; st.visibility = 'hidden'; st.top = '0'; st.left = '-9999px';
-  st.whiteSpace = 'pre-wrap'; st.overflowWrap = 'break-word'; st.overflow = 'hidden';
+  const single = ta.tagName === 'INPUT'; // one line, scrolls horizontally
+  st.whiteSpace = single ? 'pre' : 'pre-wrap'; st.overflowWrap = 'break-word'; st.overflow = 'hidden';
+  if (single) st.width = 'auto';
   mirror.textContent = ta.value.slice(0, pos);
   const marker = document.createElement('span');
   marker.textContent = ta.value.slice(pos) || '.';
   mirror.append(marker);
+  if (single) return { top: 0, left: marker.offsetLeft - ta.scrollLeft, height: ta.offsetHeight };
   const lh = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.4;
   return { top: marker.offsetTop - ta.scrollTop, left: marker.offsetLeft - ta.scrollLeft, height: lh };
 }

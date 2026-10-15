@@ -6,12 +6,13 @@ import { esc } from '../lib/html.js';
 import { fmtN } from '../lib/format.js';
 import { ICON } from '../lib/icons.js';
 import { connById, live, saveSession } from '../state.js';
-import { forgetMeta, getMeta } from '../meta.js';
+import { forgetMeta } from '../meta.js';
 import { loadTables } from '../connections.js';
 import { attachGridEvents, renderGrid } from '../grid.js';
 import { PANEL_HTML, setupPanel } from '../panel/panel.js';
 import { renderTabs } from '../tabs.js';
 import { attachAutocomplete } from '../editor/autocomplete.js';
+import { schemaProvider } from '../editor/schema-provider.js';
 
 const DDL = /\b(create|drop|alter|rename)\b/i;
 
@@ -56,15 +57,7 @@ export function buildQueryView(t) {
   sel.onchange = () => { t.db = sel.value; renderTabs(); saveSession(); };
 
   // registered before the editor's own keys so it can take ↵ / ⇥ while open
-  attachAutocomplete(ta, {
-    dialect: () => connById(t.connId)?.type,
-    tables: () => {
-      const d = live(t.connId).dbs.find((x) => x.name === t.db);
-      if (d && !d.tables) loadTables(t.connId, t.db);
-      return d?.tables || [];
-    },
-    columns: async (table) => (await getMeta(t.connId, t.db, table)).cols,
-  });
+  attachAutocomplete(ta, schemaProvider(t.connId, () => t.db));
   ta.addEventListener('keydown', (e) => {
     if (modKey(e) && e.key === 'Enter') { e.preventDefault(); runQuery(t); }
     if (e.key === 'Tab' && !modKey(e)) {

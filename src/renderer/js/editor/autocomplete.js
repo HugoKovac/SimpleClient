@@ -1,5 +1,5 @@
-// Completion popup for the SQL <textarea>: columns of the tables in the statement,
-// `alias.` members, table names after FROM/JOIN, and keywords.
+// Completion popup for SQL fields (query <textarea>, WHERE <input>): columns of the tables
+// in the statement, `alias.` members, table names after FROM/JOIN, and keywords.
 //
 // Opens while typing a name (or after `.`), or on Ctrl+Space.
 // ↑↓ choose, ↵/⇥ insert, esc close.
@@ -13,10 +13,12 @@ const KIND_ICON = { column: ICON.column, table: ICON.table, alias: ICON.table, k
 const TRIGGER = /[\w$."`]$/;
 
 /**
- * @param {HTMLTextAreaElement} ta
+ * Attach before the field's own keydown listeners: while open, it takes ↵ / ⇥ / esc.
+ * @param {HTMLTextAreaElement | HTMLInputElement} ta
  * @param {{ dialect(): string, tables(): { name: string, kind?: string }[], columns(table: string): Promise<object[]> }} provider
+ * @param {{ prefix?: () => string }} [opts] SQL that logically precedes the field's text
  */
-export function attachAutocomplete(ta, provider) {
+export function attachAutocomplete(ta, provider, { prefix } = {}) {
   const box = document.createElement('div');
   box.className = 'ac hidden';
   ta.after(box);
@@ -24,11 +26,12 @@ export function attachAutocomplete(ta, provider) {
 
   const isOpen = () => !box.classList.contains('hidden');
   const close = () => { seq++; box.classList.add('hidden'); items = []; };
+  const contextAt = (pos) => completionContext(ta.value, pos, { prefix: prefix?.() });
 
   async function update(manual) {
     const pos = ta.selectionStart;
     if (pos !== ta.selectionEnd) return close();
-    const ctx = completionContext(ta.value, pos);
+    const ctx = contextAt(pos);
     if (!ctx || (!manual && !ctx.prefix && ctx.mode !== 'member')) return close();
     const my = ++seq;
     const tables = provider.tables();
@@ -67,7 +70,7 @@ export function attachAutocomplete(ta, provider) {
 
   function accept(i) {
     const it = items[i];
-    const ctx = completionContext(ta.value, ta.selectionStart);
+    const ctx = contextAt(ta.selectionStart);
     close();
     if (!it || !ctx) return;
     inserting = true;

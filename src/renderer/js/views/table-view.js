@@ -3,13 +3,15 @@ import { MOD, PAGE } from '../config.js';
 import { api } from '../api.js';
 import { $, spinner } from '../lib/dom.js';
 import { esc } from '../lib/html.js';
-import { fmtN, quoteIdent, shortType } from '../lib/format.js';
+import { fmtN, qualifiedName, shortType } from '../lib/format.js';
 import { ICON } from '../lib/icons.js';
 import { connById } from '../state.js';
 import { getMeta } from '../meta.js';
 import { attachGridEvents, renderGrid } from '../grid.js';
 import { PANEL_HTML, setupPanel } from '../panel/panel.js';
 import { openQuery } from '../tabs.js';
+import { attachAutocomplete } from '../editor/autocomplete.js';
+import { schemaProvider } from '../editor/schema-provider.js';
 
 export function buildTableView(t) {
   const el = document.createElement('div');
@@ -39,6 +41,10 @@ export function buildTableView(t) {
 
   t.filterInput = $('.filter input', el);
   t.filterInput.value = t.where || ''; // e.g. opened from the side panel with a filter
+  // column suggestions: the filter is completed as the WHERE clause of `select * from <table>`
+  attachAutocomplete(t.filterInput, schemaProvider(t.connId, () => t.db), {
+    prefix: () => `select * from ${qualifiedName(connById(t.connId)?.type, t.table)} where `,
+  });
   t.filterInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') { t.where = t.filterInput.value.trim(); t.page = 0; loadTable(t); }
     if (e.key === 'Escape') { t.filterInput.value = ''; if (t.where) { t.where = ''; t.page = 0; loadTable(t); } t.filterInput.blur(); }
@@ -50,9 +56,7 @@ export function buildTableView(t) {
     if (b.dataset.act === 'prev' && t.page > 0) { t.page--; loadTable(t); }
     if (b.dataset.act === 'next' && (t.page + 1) * PAGE < t.total) { t.page++; loadTable(t); }
     if (b.dataset.act === 'sql') {
-      const type = connById(t.connId).type;
-      const q = type === 'mysql' ? quoteIdent(type, t.table) : t.table.split('.').map((p) => quoteIdent(type, p)).join('.');
-      openQuery(t.connId, t.db, `select *\nfrom ${q}${t.where ? `\nwhere ${t.where}` : ''}\nlimit 100;`);
+      openQuery(t.connId, t.db, `select *\nfrom ${qualifiedName(connById(t.connId).type, t.table)}${t.where ? `\nwhere ${t.where}` : ''}\nlimit 100;`);
     }
   });
   return el;

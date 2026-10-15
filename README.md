@@ -40,6 +40,7 @@ Clic sur un en-tête de colonne : tri asc → desc → aucun.
 Dans l'éditeur de requêtes : les colonnes des tables de la requête courante (`from` / `join`, avec leurs alias),
 `alias.` → colonnes de cette table, les tables après `from` / `join`, `schema.` → tables du schéma, et les mots-clés.
 ↑↓ pour choisir, ↵ ou ⇥ pour insérer, esc pour fermer. Les identifiants sont quotés si besoin (`"createdAt"`).
+Aussi dans la barre `WHERE` d'une table (⌘F) : colonnes de la table et mots-clés.
  Onglet *Structure* : colonnes, types, nullabilité, défauts, clés primaires et étrangères.
 
 ## Panneau latéral

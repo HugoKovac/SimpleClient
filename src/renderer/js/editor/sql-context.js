@@ -119,6 +119,17 @@ export function tableRefs(tokens) {
 }
 
 /**
+ * What is being typed at `pos` in `text`. `prefix` is SQL that logically precedes `text`
+ * (e.g. `select * from t where ` for a WHERE-only input); returned offsets are relative to `text`.
+ * See `analyze` for the result. */
+export function completionContext(text, pos, { prefix = '' } = {}) {
+  const ctx = analyze(prefix + text, prefix.length + pos);
+  if (!ctx || !prefix) return ctx;
+  if (ctx.start < prefix.length) return null;
+  return { ...ctx, start: ctx.start - prefix.length, end: ctx.end - prefix.length };
+}
+
+/**
  * What is being typed at `pos`.
  * @returns {null | {
  *   prefix: string, start: number, end: number,   // replace sql.slice(start, end) by the completion
@@ -128,7 +139,7 @@ export function tableRefs(tokens) {
  *   refs: { table: string, alias: string | null }[],
  * }} null when completion makes no sense (inside a string or a comment)
  */
-export function completionContext(sql, pos) {
+function analyze(sql, pos) {
   const tokens = tokenize(sql);
   const inside = tokens.find((t) => t.start < pos && (pos < t.end || (t.open && pos === t.end)));
   if (inside && (inside.type === 'string' || inside.type === 'comment')) return null;

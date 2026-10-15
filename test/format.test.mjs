@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { cellHtml, looksJson, quoteIdent, shortType, sqlLiteral } from '../src/renderer/js/lib/format.js';
+import { cellHtml, looksJson, qualifiedName, quoteIdent, shortType, sqlLiteral } from '../src/renderer/js/lib/format.js';
 import { esc, highlight } from '../src/renderer/js/lib/html.js';
 import { fuzzy } from '../src/renderer/js/palette/fuzzy.js';
 
@@ -21,6 +21,9 @@ test('sqlLiteral / quoteIdent', () => {
   assert.equal(sqlLiteral("l'eau"), "'l''eau'");
   assert.equal(quoteIdent('postgres', 'a"b'), '"a""b"');
   assert.equal(quoteIdent('mysql', 'a`b'), '`a``b`');
+  assert.equal(qualifiedName('postgres', 'stats.daily'), '"stats"."daily"');
+  assert.equal(qualifiedName('sqlite', 'a.b'), '"a.b"');
+  assert.equal(qualifiedName('mysql', 'users'), '`users`');
 });
 
 test('looksJson / shortType', () => {

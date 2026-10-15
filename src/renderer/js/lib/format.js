@@ -42,3 +42,8 @@ export function sqlLiteral(v) {
 export function quoteIdent(type, name) {
   return type === 'mysql' ? '`' + name.replace(/`/g, '``') + '`' : '"' + name.replace(/"/g, '""') + '"';
 }
+
+/** Quoted table name; Postgres display names `schema.table` are quoted part by part. */
+export function qualifiedName(type, table) {
+  return type === 'mysql' || type === 'sqlite' ? quoteIdent(type, table) : table.split('.').map((p) => quoteIdent(type, p)).join('.');
+}

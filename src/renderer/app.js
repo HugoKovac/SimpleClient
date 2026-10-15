@@ -1,5 +1,5 @@
 'use strict';
-/* Tablette — renderer. Vanilla JS, no build step. */
+/* SimpleClient — renderer. Vanilla JS, no build step. */
 
 // `api` is exposed on window by the preload script.
 const PLATFORM = new URLSearchParams(location.search).get('platform') || 'darwin';
@@ -48,7 +48,7 @@ function toast(msg) {
 }
 
 function store(key, val) {
-  try { if (val === undefined) return JSON.parse(localStorage.getItem('tablette.' + key)); localStorage.setItem('tablette.' + key, JSON.stringify(val)); }
+  try { if (val === undefined) return JSON.parse(localStorage.getItem('simpleclient.' + key)); localStorage.setItem('simpleclient.' + key, JSON.stringify(val)); }
   catch { return null; }
 }
 

@@ -1,4 +1,4 @@
-# Tablette
+# SimpleClient
 
 Client de base de données épuré pour macOS (Electron) — PostgreSQL, MySQL/MariaDB et SQLite.
 Plusieurs connexions, plusieurs bases, plusieurs tables, et **⌘K** pour sauter n'importe où.
@@ -36,7 +36,7 @@ Clic sur un en-tête de colonne : tri asc → desc → aucun. Onglet *Structure*
 
 ## Détails
 
-- Connexions enregistrées dans `~/Library/Application Support/tablette/connections.json`, mots de passe chiffrés avec le trousseau macOS (`safeStorage`).
+- Connexions enregistrées dans `~/Library/Application Support/SimpleClient/connections.json`, mots de passe chiffrés avec le trousseau macOS (`safeStorage`).
 - Les connexions et onglets ouverts sont restaurés au relancement.
 - Postgres : une base = un pool, les schémas autres que `public` apparaissent en `schema.table`.
 - Les tables de toutes les bases sont indexées en arrière-plan à la connexion, pour ⌘K.
@@ -45,7 +45,7 @@ Clic sur un en-tête de colonne : tri asc → desc → aucun. Onglet *Structure*
 ## Releases (DMG)
 
 Chaque tag `v*` poussé déclenche `.github/workflows/release.yml` : build sur macOS, puis
-`Tablette-<version>-arm64.dmg` et `Tablette-<version>-x64.dmg` attachés à une GitHub Release.
+`SimpleClient-<version>-arm64.dmg` et `SimpleClient-<version>-x64.dmg` attachés à une GitHub Release.
 
 ```bash
 git tag v0.2.0 && git push origin v0.2.0
@@ -54,7 +54,7 @@ git tag v0.2.0 && git push origin v0.2.0
 En local : `npm run dist` (sur un Mac).
 
 L'app n'est pas signée (pas de certificat Apple Developer) : au premier lancement, clic droit → *Ouvrir*,
-ou `xattr -dr com.apple.quarantine /Applications/Tablette.app`.
+ou `xattr -dr com.apple.quarantine /Applications/SimpleClient.app`.
 
 ## Structure
 
